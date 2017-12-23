@@ -36,13 +36,13 @@ def twitter(user):
 
         os.makedirs(desktop_path + '/Profiles/@' + user + ' (' + user_name + ') #' + session_code)
         with open(desktop_path + "/Profiles/@" + user + " (" + user_name + ") #" + session_code + "/1profile.jpg", "wb") as code:
-            code.write(profile_picture_link.countent)
+            code.write(profile_picture_link.content)
 
         image_banner = re.search(r'https://pbs\.twimg\.com/profile_banners/.+1500x500', str(soup_images[3]))
         if image_banner:
             image_banner_link = requests.get(image_banner.group())
             with open(desktop_path + "/Profiles/@" + user + " (" + user_name + ") #" + session_code + "/2banner.jpg", "wb") as code:
-                code.write(image_banner_link.countent)
+                code.write(image_banner_link.content)
 
         private_profile = soup.find('span', class_='ProfileHeaderCard-badges')
 
@@ -62,7 +62,7 @@ def twitter(user):
                         count = count + 1
                         post_img_link = requests.get(item)
                         with open(desktop_path + "/Profiles/@" + user + " (" + user_name + ") #" + session_code + "/media/" + str(count) + ".jpg", "wb") as code:
-                            code.write(post_img_link.countent)
+                            code.write(post_img_link.content)
                 i += 1
         for comment in comments:
             print(comment)
