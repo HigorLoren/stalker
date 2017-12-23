@@ -1,87 +1,86 @@
-# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 from random import randint
 import requests, os, os.path, re, winshell, time
 
 
-# Funcoes
-def entrada_dados_twitter():
+# Functions
+def user_input_twitter():
     os.system('cls' if os.name == 'nt' else 'clear')
-    print('\n\tDigite o usuário do twitter (exit para sair)\n')
-    usuario = input('Usuário:\t')
-    twitter(usuario)
+    print('\n\tType the twitter username (exit to close)\n')
+    user = input('User:\t')
+    twitter(user)
 
 
-def twitter(usuario):
+def twitter(user):
 
-    if usuario == 'exit':
+    if user == 'exit':
         exit()
-    page_link = 'https://twitter.com/' + usuario + '/media'
+    twitter_media_url = 'https://twitter.com/' + user + '/media'
 
     os.system('cls' if os.name == 'nt' else 'clear')
-    print('\tBaixando...')
+    print('\tDownloading...')
     time.sleep(1)
     os.system('cls' if os.name == 'nt' else 'clear')
-    print('\tIsto pode demorar um pouco...')
+    print('\tThis may take a while...')
 
     try:
-        html_page = requests.get(page_link)
+        html_page = requests.get(twitter_media_url)
         soup = BeautifulSoup(html_page.text, 'html.parser')
 
-        imagens = soup.find_all('img')
-        imagem_perfil = re.search(r'https://pbs\.twimg\.com/profile_images/.+jpg', str(imagens[4]))
-        imagem_perfil_link = requests.get(imagem_perfil.group())
-        nome = soup.find_all('a', class_='ProfileHeaderCard-nameLink u-textInheritColor js-nav')[0].get_text()
+        soup_images = soup.find_all('img')
+        profile_picture = re.search(r'https://pbs\.twimg\.com/profile_soup_images/.+jpg', str(soup_images[4]))
+        profile_picture_link = requests.get(profile_picture.group())
+        user_name = soup.find_all('a', class_='ProfileHeaderCard-nameLink u-textInheritColor js-nav')[0].get_text()
 
-        sessao = str(randint(0, 999))
+        session_code = str(randint(0, 999))
 
-        os.makedirs(desktop_caminho + '/Perfis/@' + usuario + ' (' + nome + ') #' + sessao)
-        with open(desktop_caminho + "/Perfis/@" + usuario + " (" + nome + ") #" + sessao + "/1perfil.jpg", "wb") as code:
-            code.write(imagem_perfil_link.content)
+        os.makedirs(desktop_path + '/Profiles/@' + user + ' (' + user_name + ') #' + session_code)
+        with open(desktop_path + "/Profiles/@" + user + " (" + user_name + ") #" + session_code + "/1profile.jpg", "wb") as code:
+            code.write(profile_picture_link.countent)
 
-        imagem_banner = re.search(r'https://pbs\.twimg\.com/profile_banners/.+1500x500', str(imagens[3]))
-        if imagem_banner:
-            imagem_banner_link = requests.get(imagem_banner.group())
-            with open(desktop_caminho + "/Perfis/@" + usuario + " (" + nome + ") #" + sessao + "/2banner.jpg", "wb") as code:
-                code.write(imagem_banner_link.content)
+        image_banner = re.search(r'https://pbs\.twimg\.com/profile_banners/.+1500x500', str(soup_images[3]))
+        if image_banner:
+            image_banner_link = requests.get(image_banner.group())
+            with open(desktop_path + "/Profiles/@" + user + " (" + user_name + ") #" + session_code + "/2banner.jpg", "wb") as code:
+                code.write(image_banner_link.countent)
 
-        perfil_bloqueado = soup.find('span', class_='ProfileHeaderCard-badges')
+        private_profile = soup.find('span', class_='ProfileHeaderCard-badges')
 
-        observacoes = []
+        comments = []
 
-        if perfil_bloqueado:
-            observacoes.append('Perfil Privado')
-        if not perfil_bloqueado:
-            os.makedirs(desktop_caminho + '/Perfis/@' + usuario + ' (' + nome + ') #' + sessao + "/Media/")
-            images_postadas = soup.findAll('img', src=True)
+        if private_profile:
+            comments.append('Private Profile')
+        if not private_profile:
+            os.makedirs(desktop_path + '/Profiles/@' + user + ' (' + user_name + ') #' + session_code + "/Media/")
+            soup_posts_imgs = soup.findAll('img', src=True)
             i = 0
-            cont = 0
-            for x in images_postadas:
-                this_is_link = re.findall(r'https://pbs\.twimg\.com/media/.+.jpg', str(images_postadas[i]))
+            count = 0
+            for x in soup_posts_imgs:
+                this_is_link = re.findall(r'https://pbs\.twimg\.com/media/.+.jpg', str(soup_posts_imgs[i]))
                 if this_is_link:
                     for item in this_is_link:
-                        cont = cont + 1
-                        imagem_postada_link = requests.get(item)
-                        with open(desktop_caminho + "/Perfis/@" + usuario + " (" + nome + ") #" + sessao + "/media/" + str(cont) + ".jpg", "wb") as code:
-                            code.write(imagem_postada_link.content)
+                        count = count + 1
+                        post_img_link = requests.get(item)
+                        with open(desktop_path + "/Profiles/@" + user + " (" + user_name + ") #" + session_code + "/media/" + str(count) + ".jpg", "wb") as code:
+                            code.write(post_img_link.countent)
                 i += 1
-        for observacao in observacoes:
-            print(observacao)
+        for comment in comments:
+            print(comment)
 
-        titulo = None
+        title = None
         for i in range(0, len(soup.title.string)):
-            titulo = soup.title.string.replace(" | Twitter", "")
+            title = soup.title.string.replace(" | Twitter", "")
         os.system('cls' if os.name == 'nt' else 'clear')
-        print('Imagem de perfil, banner e ' + titulo + '\nbaixados com sucesso!')
+        print('Profile picture, banner and ' + title + '\nsuccessfully downloaded!')
     except:
         os.system('cls' if os.name == 'nt' else 'clear')
-        print('Ops, aconteceu um erro')
-        print('Você deve ter digitado o nome de usuário errado...')
-        print('\nO programa irá reiniciar em segundos...')
+        print('Oops, an error has occurred.')
+        print('You must have entered the wrong username.')
+        print('\nThe program will restart in seconds...')
         time.sleep(5)
-        entrada_dados_twitter()
+        user_input_twitter()
 
 
-# Começo do algoritmo
-desktop_caminho = winshell.desktop()
-entrada_dados_twitter()
+# Program Start
+desktop_path = winshell.desktop()
+user_input_twitter()
