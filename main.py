@@ -34,14 +34,14 @@ def twitter(user):
 
         session = str(randint(0, 999))
 
-        os.makedirs(desktop_path + '/Profiles/@' + user + ' (' + name + ') #' + session)
-        with open(desktop_path + "/Profiles/@" + user + " (" + name + ") #" + session + "/Profile.jpg", "wb") as code:
+        os.makedirs(path + '/Profiles/@' + user + ' (' + name + ') #' + session)
+        with open(path + "/Profiles/@" + user + " (" + name + ") #" + session + "/Profile.jpg", "wb") as code:
             code.write(profile_picture_link.content)
 
         image_banner = re.search(r'https://pbs\.twimg\.com/profile_banners/.+1500x500', str(images[3]))
         if image_banner:
             image_banner_link = requests.get(image_banner.group())
-            with open(desktop_path + "/Profiles/@" + user + " (" + name + ") #" + session + "/Banner.jpg", "wb") as code:
+            with open(path + "/Profiles/@" + user + " (" + name + ") #" + session + "/Banner.jpg", "wb") as code:
                 code.write(image_banner_link.content)
 
         private_profile = soup.find('span', class_='ProfileHeaderCard-badges')
@@ -51,7 +51,7 @@ def twitter(user):
         if private_profile:
             comments.append('Private Profile')
         if not private_profile:
-            os.makedirs(desktop_path + '/Profiles/@' + user + ' (' + name + ') #' + session + "/Media/")
+            os.makedirs(path + '/Profiles/@' + user + ' (' + name + ') #' + session + "/Media/")
             media_posts = soup.findAll('img', src=True)
             i = 0
             count = 0
@@ -61,7 +61,7 @@ def twitter(user):
                     for item in this_is_link:
                         count = count + 1
                         media_post_link = requests.get(item)
-                        with open(desktop_path + "/Profiles/@" + user + " (" + name + ") #" + session + "/media/" + str(count) + ".jpg", "wb") as code:
+                        with open(path + "/Profiles/@" + user + " (" + name + ") #" + session + "/media/" + str(count) + ".jpg", "wb") as code:
                             code.write(media_post_link.content)
                 i += 1
         for comment in comments:
@@ -82,5 +82,8 @@ def twitter(user):
 
 
 # Start
-desktop_path = winshell.desktop()
+if os.name == 'nt':
+    path = winshell.desktop()
+else:
+    path = '.'
 user_input_twitter()
