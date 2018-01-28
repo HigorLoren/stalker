@@ -35,7 +35,7 @@ class DownloadMedia:
         try:
             path = f'\\{nick}_[instagram]'
         except FileExistsError:
-            return 'Já existe este diretório, vamos sobreescrever os arquivos existentes'
+            return 'This directory already exists, we will overwrite the existing files'
         try:
             arquivo = open('login-insta.txt', 'r')
             user_data = arquivo.readline()
