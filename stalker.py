@@ -4,7 +4,6 @@ from os import system, makedirs
 from re import search, findall
 
 
-#####################
 class GetInformation:
     def __init__(self, user):
         self.user = user
@@ -26,7 +25,6 @@ class GetInformation:
             print('Erro:', e)
 
 
-####################
 class DownloadMedia:
 
     def __init__(self, user):
@@ -47,12 +45,10 @@ class DownloadMedia:
             system(f'instagram-scraper {nick}')
             return 'Downloaded successfully!'
 
-#
     @staticmethod
     def facebook(user):
-        print(user)
+        print(f'Working on it\n{user} images will have to wait')
 
-#
     @staticmethod
     def twitter(user):
 
