@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 from requests import get
 from os import system, makedirs
 from re import search, findall
-from winshell import desktop
 
 
 #####################
@@ -33,11 +32,10 @@ class DownloadMedia:
     def __init__(self, user):
         self.user = user
 
-
     @staticmethod
     def instagram(nick):
         try:
-            path = f'{desktop()}/{nick}_[instagram]'
+            path = f'\\{nick}_[instagram]'
         except FileExistsError:
             return 'Já existe este diretório, vamos sobreescrever os arquivos existentes'
         try:
@@ -92,7 +90,7 @@ class DownloadMedia:
             if private_profile:
                 print('Private Profile is not supported')
             if not private_profile:
-                path = f'{desktop()}\\{user} [twitter]'
+                path = f'\\{user} [twitter]'
                 try:
                     makedirs(path)
                 except FileExistsError:
