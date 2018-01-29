@@ -33,7 +33,8 @@ class DownloadMedia:
     @staticmethod
     def instagram(nick):
         try:
-            path = f'\\{nick}_[instagram]'
+            path = f'./{nick}_[instagram]'
+            makedirs(path)
         except FileExistsError:
             return 'This directory already exists, we will overwrite the existing files'
         try:
@@ -86,7 +87,7 @@ class DownloadMedia:
             if private_profile:
                 print('Private Profile is not supported')
             if not private_profile:
-                path = f'\\{user} [twitter]'
+                path = f'./{user}_[twitter]'
                 try:
                     makedirs(path)
                 except FileExistsError:
