@@ -1,5 +1,4 @@
 # Twitter Scraper
-=================
 
 twitter-scraper is a command-line application written in Python that scrapes and downloads an twitter user's photos and videos. Use responsibly.
 
