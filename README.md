@@ -1,73 +1,65 @@
-# Stalker (web scraping)
-A python script that searches and downloads informations about a person
+# Twitter Scraper
+=================
 
-## Getting Started
+twitter-scraper is a command-line application written in Python that scrapes and downloads an twitter user's photos and videos. Use responsibly.
 
-These instructions will get you a copy of the project up and running on your local machine
-
-### Prerequisites
-
-What things you need to run and how to install them
-
-* Python obviously
-* pip
-  * bs4 ~> $ pip install bs4
-  * resquests ~> $ pip install requests
-  * instagram-scraper ~> $ pip install instagram-scraper
-
-### Installing
-
-A step by step that tell you how to use the library in your script
-
-1. Move the [script](stalker.py) to your project folder
-
-2. In your script call the library like this:  
-```python
-import stalker
+Install
+-------
+To install instagram-scraper:
+```bash
+$ pip install twitter-media-scraper
 ```
 
-## Usage
-
-### Downloading Media from Twitter user
-
-This function will **download**:
-* Profile picture
-* Banner image
-* The last media images
-
-```python
-stalker.DownloadMedia.twitter(user)
+To update instagram-scraper:
+```bash
+$ pip install twitter-media-scraper --upgrade
 ```
 
-### Downloading Media from Instagram user
+Usage
+-----
 
-This function will **download**:
-* Profile picture
-* Stories
-* All the posts
+To scrape a public user's media:
+```bash
+$ twitter-media-scraper <username>             
+```
+*By default, downloaded media will be placed in `<current working directory>/<username_[twitter]>`.*
 
-```python
-stalker.DownloadMedia.instagram(user)
+
+Options
+-------
+
+```
+--destination -d    Specify the download destination an it will download in <destionation>/<username_[twitter]>. By default, media will 
+                    be downloaded to <current working directory>/<username_[twitter]>.
 ```
 
-### Getting Information from Twitter user
+License
+-------
+This is free and unencumbered software released into the public domain.
 
-This function will get a **Dictionary** with:
-* Name
-* User
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
 
-```python
-stalker.GetInformation.twitter(user)
-```
-## Built With Help Of:
-  * [instagram-scraper](https://github.com/rarcega/instagram-scraper) - The library used for instagram media download. Thanks [@rarcega](https://github.com/rarcega)
+In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
 
 ## Authors
 
 * **Higor Cervelin** - *Initial work* - [HigorCervelin](https://github.com/HigorCervelin)
 
 See also the list of [contributors](https://github.com/HigorCervelin/stalker/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
