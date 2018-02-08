@@ -2,9 +2,20 @@ from bs4 import BeautifulSoup
 from requests import get
 from os import makedirs
 from re import search, findall
+import sys
 
-user = input('Usuario: ')
+user = sys.argv[1]
 twitter_media_url = f'https://twitter.com/{user}/media'
+try:
+    dest = ''
+    for agv in sys.argv:
+        dest = search(r'-d', str(agv))
+        if dest:
+            dest_p = sys.argv.index(agv)
+            destination = sys.argv[dest_p+1]
+except:
+    pass
+
 
 try:
     html_page = get(twitter_media_url)
@@ -38,7 +49,11 @@ try:
     if private_profile:
         print('Private Profile is not supported')
     if not private_profile:
-        path = f'./{user}_[twitter]'
+        try:
+            path = destination + f'/{user}_[twitter]'
+        except NameError or IndexError:
+            path = f'./{user}_[twitter]'
+
         try:
             makedirs(path)
         except FileExistsError:
