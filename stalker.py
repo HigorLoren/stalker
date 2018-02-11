@@ -18,7 +18,33 @@ class GetInformation:
 
             name = soup.find_all('a', class_='ProfileHeaderCard-nameLink u-textInheritColor js-nav')[0].get_text()
 
-            information = {'user': user, 'name': name}
+            count_media = soup.find_all('a', class_="PhotoRail-headingWithCount js-nav")[0].text
+            count_media = search('\d+', count_media)
+            count_media = count_media.group(0)
+
+            bio = soup.find_all('p', class_="ProfileHeaderCard-bio u-dir")[0].text
+
+            nav_values = soup.find_all('span', class_="ProfileNav-value")
+
+            tweets_count = nav_values[0].text
+            tweets_count = search('\d+', tweets_count)
+            tweets_count = tweets_count.group(0)
+
+            following_count = nav_values[1].text
+            following_count = search('\d+', following_count)
+            following_count = following_count.group(0)
+
+            followers_count = nav_values[2].text
+            followers_count = search('\d+', followers_count)
+            followers_count = followers_count.group(0)
+
+            information = {'user': user,
+                           'name': name,
+                           'tweetscount': tweets_count,
+                           'followingcount': following_count,
+                           'followerscount': followers_count,
+                           'mediacount': count_media,
+                           'bio': bio}
 
             return information
         except Exception as e:
