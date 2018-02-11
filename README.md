@@ -55,6 +55,11 @@ stalker.DownloadMedia.instagram(user)
 This function will get a **Dictionary** with:
 * Name
 * User
+* Tweets Count
+* Following Count
+* Followers Count
+* Media Count
+* Bio
 
 ```python
 stalker.GetInformation.twitter(user)
